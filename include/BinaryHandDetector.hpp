@@ -1,9 +1,9 @@
 ﻿/*
-    Класс детектора руки на основе анализа кривизны контура.
+    Класс детектора руки на бинарном изображении на основе анализа кривизны контура.
 */
 
-#ifndef __HANDDETECTOR_H__
-#define __HANDDETECTOR_H__
+#ifndef __BINARYHANDDETECTOR_HPP__
+#define __BINARYHANDDETECTOR_HPP__
 
 #include <vector>
 #include <list>
@@ -11,7 +11,7 @@
 
 #include <Hand.h>
 
-class HandDetector
+class BinaryHandDetector
 {
 public:
     // Отслеживание перемещения рук на изображении.
@@ -35,4 +35,4 @@ private:
     std::vector<cv::Mat> prev_pyr_;
 };
 
-#endif // __HANDDETECTOR_H__
+#endif // __BINARYHANDDETECTOR_HPP__

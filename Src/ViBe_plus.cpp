@@ -9,7 +9,6 @@
 using namespace cv;
 
 const uchar BackGround = 0;
-const uchar ForeGround = 255;
 
 ViBe_plus::ViBe_plus() : ViBe()
 {
@@ -20,7 +19,7 @@ ViBe_plus::ViBe_plus(int history_depth, int radius, int min_overlap, int probabi
 {
 }
 
-void ViBe_plus::apply(const InputArray &image, OutputArray &fgmask, double)
+void ViBe_plus::apply(InputArray &image, OutputArray &fgmask, double)
 {
     const Mat image_ = image.getMat();
     fgmask.create(image_.rows, image_.cols, CV_8U);
@@ -44,7 +43,7 @@ static double computeGradientSqr(const Mat& image, int y, int x)
     const uchar* bottom = image.ptr(y - 1);
 
     // Переводим окрестность точки в градации серого.
-    double gray[3][3] = { 0 };
+    double gray[3][3] = { {0} };
     gray[0][0] = 0.114 * top[3 * (x - 1)] + 0.587 * top[3 * (x - 1) + 1] + 0.299 * top[3 * (x - 1) + 2];
     gray[0][1] = 0.114 * top[3 * x]       + 0.587 * top[3 * x + 1]       + 0.299 * top[3 * x + 2];
     gray[0][2] = 0.114 * top[3 * (x + 1)] + 0.587 * top[3 * (x + 1) + 1] + 0.299 * top[3 * (x + 1) + 2];
