@@ -38,7 +38,7 @@ ViBe::~ViBe()
     bg_mat_.release();
 }
 
-void ViBe::apply(const InputArray &image, OutputArray &fgmask, double)
+void ViBe::apply(InputArray &image, OutputArray &fgmask, double)
 {
     const Mat image_ = image.getMat();
     fgmask.create(image_.rows, image_.cols, CV_8U);

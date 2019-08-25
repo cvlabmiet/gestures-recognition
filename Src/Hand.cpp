@@ -32,6 +32,7 @@ static Point2i projection(const Point2i& line_start, const Point2i& line_end, co
 // Вычисление положения точек пальцев с использованием точек максимума кривизны контура.
 static vector<Point2i> getFingers(const vector<Point2i>& max_points)
 {
+    // TODO: Контур может начаться с любой точки руки. Нужно искать максимальное расстояние между точками (начало большого пальца и конец указательного).
     double first_difference = abs(norm(max_points[1] - max_points[2]) - norm(max_points[2] - max_points[3]));
     double second_difference = abs(norm(max_points[5] - max_points[6]) - norm(max_points[6] - max_points[7]));
 

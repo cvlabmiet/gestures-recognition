@@ -5,7 +5,7 @@
 
 #include <ViBe_plus.h>
 #include <CorrectionOfExposition.h>
-#include <HandDetector.h>
+#include <BinaryHandDetector.hpp>
 #include <VideoSequenceCapture.h>
 #include <Timer.h>
 #include <Debug.h>
@@ -13,9 +13,6 @@
 
 using namespace std;
 using namespace cv;
-
-const uchar ForeGround = 255;
-const uchar Background = 0;
 
 int main()
 {
@@ -46,7 +43,7 @@ int main()
     Mat fgmask(frame.size(), CV_8UC1);
     Mat tracker_image(frame.size(), CV_8UC3);
 
-    HandDetector hand_detector;
+    BinaryHandDetector hand_detector;
     GesturesRecognition gestures_recognition;
 
     while (true)

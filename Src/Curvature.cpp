@@ -7,9 +7,6 @@
 using namespace std;
 using namespace cv;
 
-const uchar Background = 0;
-const uchar ForeGround = 255;
-
 vector<float> getCurvature(const vector<Point2i>& contour, const Size& image_size, const int chord_length)
 {
     size_t length = contour.size();

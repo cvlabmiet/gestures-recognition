@@ -18,7 +18,7 @@ public:
 
     // Функция вычисляет маску сегментации и обновляет модель.
     // TODO: вычислять prob через learningrate.
-    void apply(const cv::InputArray &image, cv::OutputArray &mask, double);
+    void apply(cv::InputArray &image, cv::OutputArray &mask, double);
 
 private:
     void update(const cv::Mat& image, const cv::Mat& update_mask);

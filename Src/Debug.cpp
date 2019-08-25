@@ -3,8 +3,11 @@
 */
 
 #include <stdio.h>
-#include <direct.h>
 #include <opencv2/highgui.hpp>
+
+#ifdef _WIN32
+#include <direct.h>
+#endif
 
 #include <Debug.h>
 
