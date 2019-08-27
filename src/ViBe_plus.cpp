@@ -4,7 +4,7 @@
 
 #include <ViBe_plus.h>
 
-#include <deletenoise.h>
+#include <deleteNoise.h>
 
 using namespace cv;
 
