@@ -14,7 +14,7 @@ public:
     VideoSequenceCapture(const cv::String& filename);
 
     // Возвращает следующий кадр видеопоследовательности.
-    void operator >> (cv::Mat& image);
+    void operator>>(cv::Mat& image);
 private:
     cv::String directory; // Имя директории, в которой содержится видеопоследовательность.
     cv::String name; // Имя видеопоследовательности.
