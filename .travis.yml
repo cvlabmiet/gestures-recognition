@@ -23,3 +23,14 @@ script:
   - cd build
   - cmake -DCPACK_GENERATOR=DEB ..
   - make package -j
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file:
+    - "build/HandMouse-*.deb"
+    - "build/HandMouse-*.tar.gz"
+  overwrite: true
+  skip_cleanup: true
+  on:
+    - condition: "$CC = gcc"
