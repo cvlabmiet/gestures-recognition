@@ -21,7 +21,7 @@ void Timer::stop()
     tick_counter += time;
 }
 
-double Timer::getTime()
+double Timer::getTime() const
 {
     return (double)tick_counter / getTickFrequency();
 }

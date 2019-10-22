@@ -1,31 +1,39 @@
 ﻿#include <fstream>
 #include <optional>
+#include <list>
+
 #include <opencv2/highgui.hpp>
 #include <opencv2/video/video.hpp>
 
-#include <ViBe_plus.h>
-#include <CorrectionOfExposition.h>
-#include <BinaryHandDetector.hpp>
-#include <VideoSequenceCapture.h>
+#include <Hand.h>
 #include <Timer.h>
 #include <Debug.h>
+#include <VideoSequenceCapture.h>
+#include <HandDetector.hpp>
 #include <GesturesRecognition.h>
 
 using namespace std;
 using namespace cv;
 
+// Отрисовка всех найденных рук.
+void printHands(InputArray image, const std::list<Hand>& hands)
+{
+    Mat frame = image.getMat();
+    for (const auto& hand : hands)
+    {
+        hand.print(frame);
+    }
+}
+
 int main()
 {
-    Timer total_timer, exposition_timer, motion_timer, detector_timer, tracker_timer, gestures_timer;
+    Timer total_timer, gestures_timer;
     VideoCapture video(0);
     //VideoSequenceCapture video("d:\\test_videos\\Input7\\0.png");
-
-    ViBe_plus motion(20, 20, 2, 15);
 
     namedWindow("Input");
     namedWindow("Background");
     namedWindow("Motion");
-    namedWindow("Open");
     namedWindow("Tracker");
 
     // Пропускаем первые кадры, чтобы стабилизировалась
@@ -39,11 +47,9 @@ int main()
         waitKey(30);
     }
 
-    Mat bg_image(frame.size(), CV_8UC3);
-    Mat fgmask(frame.size(), CV_8UC1);
     Mat tracker_image(frame.size(), CV_8UC3);
 
-    BinaryHandDetector hand_detector;
+    HandDetector hand_detector(frame.rows, frame.cols);
     GesturesRecognition gestures_recognition;
 
     while (true)
@@ -55,47 +61,17 @@ int main()
             break;
 
         imageShow("Input", frame);
+        hand_detector.detect(frame);
 
-        // Коррекция яркости.
-        motion.getBackgroundImage(bg_image);
-        if (!bg_image.empty())
-        {
-            exposition_timer.start();
-            correctionOfExposition(fgmask, bg_image, frame);
-            exposition_timer.stop();
-            imageShow("Background", bg_image);
-        }
-
-        // Выделение движения.
-        motion_timer.start();
-        motion.apply(frame, fgmask, 1.0 / 15);
-        motion_timer.stop();
-        imageShow("Motion", fgmask);
-
-        // Размыкание маски движущихся объектов.
-        const uchar kernel_values[25] = { 1, 1, 1, 1, 1,
-                                          1, 1, 1, 1, 1,
-                                          1, 1, 1, 1, 1,
-                                          1, 1, 1, 1, 1,
-                                          1, 1, 1, 1, 1 };
-        Matx <uchar, 5, 5> kernel_open(kernel_values);
-        morphologyEx(fgmask, fgmask, MORPH_OPEN, kernel_open);
-        imageShow("Open", fgmask);
-
-        tracker_timer.start();
-        hand_detector.trace(fgmask);
-        tracker_timer.stop();
-
-        detector_timer.start();
-        hand_detector.detect(fgmask);
-        detector_timer.stop();
+        imageShow("Motion", hand_detector.getMotionImage());
+        auto hands = hand_detector.getHands();
 
         gestures_timer.start();
-        gestures_recognition.apply(hand_detector.getHands());
+        gestures_recognition.apply(hands);
         gestures_timer.stop();
 
         frame.copyTo(tracker_image);
-        hand_detector.printHands(tracker_image);
+        printHands(tracker_image, hands);
         gestures_recognition.printClicks(tracker_image);
         imageShow("Tracker", tracker_image);
 
@@ -106,17 +82,17 @@ int main()
     }
 
     frame.release();
-    fgmask.release();
+    tracker_image.release();
     destroyAllWindows();
 
     // Записываем время работы программы.
     ofstream time_log("Time.txt");
     time_log << "Program time:" << endl;
     time_log << "Total time: " << total_timer.getTime() << " sec." << endl;
-    time_log << "Correction of exposition: " << exposition_timer.getTime() << " sec." << endl;
-    time_log << "Motion detection: " << motion_timer.getTime() << " sec." << endl;
-    time_log << "Hand tracking: " << tracker_timer.getTime() << " sec." << endl;
-    time_log << "Hand detection: " << detector_timer.getTime() << " sec." << endl;
+    time_log << "Correction of exposition: " << hand_detector.getExpositionTime() << " sec." << endl;
+    time_log << "Motion detection: " << hand_detector.getMotionTime() << " sec." << endl;
+    time_log << "Hand tracking: " << hand_detector.getTrackerTime() << " sec." << endl;
+    time_log << "Hand detection: " << hand_detector.getDetectorTime() << " sec." << endl;
     time_log << "Gestures Recognition: " << gestures_timer.getTime() << " sec." << endl;
     time_log.close();
 

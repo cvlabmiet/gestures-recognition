@@ -251,15 +251,6 @@ void BinaryHandDetector::detect(InputArray BinaryImage)
     return;
 }
 
-void BinaryHandDetector::printHands(InputArray Image) const
-{
-    Mat image = Image.getMat();
-    for (const auto& hand : hands_)
-    {
-        hand.print(image);
-    }
-}
-
 const list<Hand>& BinaryHandDetector::getHands() const
 {
     return hands_;
