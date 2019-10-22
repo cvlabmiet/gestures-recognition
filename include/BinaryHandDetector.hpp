@@ -18,8 +18,6 @@ public:
     void trace(cv::InputArray BinaryImage);
     // Обнаружение новых рук на изображении.
     void detect(cv::InputArray BinaryImage);
-    // Отрисовка всех найденных рук.
-    void printHands(cv::InputArray Image) const;
     // Возвращает список обнаруженных рук.
     const std::list<Hand>& getHands() const;
 
