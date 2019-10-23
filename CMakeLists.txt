@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
-project(HandMouse)
+cmake_minimum_required(VERSION 3.0)
+project(HandMouse VERSION 0.0.1)
 
 include(GNUInstallDirs)
+add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -fPIC)
 
 # Сборка библиотеки
 file(GLOB SOURCES src/*.cpp)
@@ -13,13 +14,14 @@ target_include_directories(${PROJECT_NAME}-lib PUBLIC
 
 find_package(OpenCV REQUIRED)
 target_include_directories(${PROJECT_NAME}-lib PUBLIC ${OpenCV_INCLUDE_DIRS})
-
-target_compile_options(${PROJECT_NAME}-lib PRIVATE -std=c++17 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter)
 target_link_libraries(${PROJECT_NAME}-lib PUBLIC ${OpenCV_LIBS})
 
 # Сборка исполняемого файла
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
+# Сборка модуля python
+add_subdirectory(python)
 
 # Упаковка в пакет
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})

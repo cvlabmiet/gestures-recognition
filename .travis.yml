@@ -7,6 +7,8 @@ addons:
     update: true
     packages:
       - libopencv-dev
+      - libboost-all-dev
+      - python3-numpy
 os:
   - linux
 
@@ -28,8 +30,9 @@ deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file:
-    - "build/HandMouse-*.deb"
-    - "build/HandMouse-*.tar.gz"
+    - echo $(ls build/HandMouse-*.deb)
+    - echo $(ls build/HandMouse-*.tar.gz)
+    - build/python/HandMouse_py.so
   overwrite: true
   skip_cleanup: true
   on:

@@ -37,6 +37,18 @@ public:
     cv::Rect2i getBoundingBox();
     // Обновление модели руки.
     int update(const std::vector<cv::Mat>& prevPyr, const std::vector<cv::Mat>& nextPyr);
+    // Оператор сравнения для хранения объектов в std::vector.
+    bool operator==(const Hand& other) const
+    {
+        for (size_t i = 0; i < 5; ++i)
+        {
+            const auto& first_finger = this->fingers_[i];
+            const auto& second_finger = other.fingers_[i];
+            if (first_finger.start != second_finger.start || first_finger.peak != second_finger.peak)
+                return false;
+        }
+        return this->midle_point_ == other.midle_point_;
+    }
 
 private:
     // Массив пальцев руки.
