@@ -26,6 +26,8 @@ script:
   - cmake -DCPACK_GENERATOR=DEB ..
   - make package -j
 
+before_deploy:
+  - ls -l ./
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
@@ -36,5 +38,4 @@ deploy:
   overwrite: true
   skip_cleanup: true
   on:
-    branch: master
     condition: "$CC = gcc"
