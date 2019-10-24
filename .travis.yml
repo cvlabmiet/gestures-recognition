@@ -29,10 +29,11 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
+  file_glob: true
   file:
-    - echo $(ls build/HandMouse-*.deb)
-    - echo $(ls build/HandMouse-*.tar.gz)
-    - build/python/HandMouse_py.so
+    - HandMouse-*.deb
+    - HandMouse-*.tar.gz
+    - python/HandMouse_py.so
   overwrite: true
   skip_cleanup: true
   on:
