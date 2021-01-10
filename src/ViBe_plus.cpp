@@ -8,8 +8,6 @@
 
 using namespace cv;
 
-const uchar BackGround = 0;
-
 ViBe_plus::ViBe_plus() : ViBe()
 {
 }
