@@ -40,7 +40,7 @@ static pair<vector<float>, vector<size_t>> findExtremums(const vector<float>& cu
         extremum_indexes.push_back(i);
     }
 
-    return pair(extremums, extremum_indexes);
+    return {extremums, extremum_indexes};
 }
 
 // Поиск индексов максимумов.

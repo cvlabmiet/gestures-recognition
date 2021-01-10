@@ -8,7 +8,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/video.hpp>
 
-#include <ViBe.h>
+#include <ViBe.hpp>
 
 class ViBe_plus : public ViBe
 {
