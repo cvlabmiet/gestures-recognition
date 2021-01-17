@@ -8,7 +8,7 @@
 #include <list>
 #include <opencv2/core.hpp>
 
-#include <ViBe_plus.h>
+#include <ViBe_plus.hpp>
 #include <BinaryHandDetector.hpp>
 #include <Hand.h>
 #include <Timer.h>
