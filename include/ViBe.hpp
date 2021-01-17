@@ -5,6 +5,8 @@
 #ifndef __VIBE_HPP__
 #define __VIBE_HPP__
 
+#include <algorithm>
+
 #include <opencv2/core.hpp>
 #include <opencv2/video.hpp>
 
@@ -154,7 +156,7 @@ private:
     }
 
     // Функция обновления модели алгоритма.
-    void updateModel(const cv::Mat& image, const cv::Mat& update_mask)
+    virtual void updateModel(const cv::Mat& image, const cv::Mat& update_mask)
     {
         if (needToInit())
         {
