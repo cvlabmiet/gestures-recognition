@@ -6,7 +6,7 @@
 #include <optional>
 
 #include <Contour.h>
-#include <Debug.h>
+#include <Debug.hpp>
 
 using namespace std;
 using namespace cv;

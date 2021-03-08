@@ -7,7 +7,7 @@
 
 #include <Hand.h>
 #include <Timer.h>
-#include <Debug.h>
+#include <Debug.hpp>
 #include <VideoSequenceCapture.h>
 #include <HandDetector.hpp>
 #include <GesturesRecognition.h>
