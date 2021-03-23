@@ -10,7 +10,7 @@
 #include <opencv2/core.hpp>
 
 #include <ViBe.hpp>
-#include <deleteNoise.h>
+#include <denoise.hpp>
 
 class ViBe_plus : public ViBe
 {
@@ -28,11 +28,10 @@ public:
         getSegmentationMask(img, fg_mask);
 
         cv::Mat update_mask = fg_mask.clone();
-        deleteNoise(fg_mask, 11, 21);
-        deleteNoise(update_mask, 0, 51);
+        denoise(fg_mask, 11, 21);
+        denoise(update_mask, 0, 51);
 
         updateModel(img, update_mask);
-        return;
     }
 
 private:
@@ -97,8 +96,6 @@ private:
                 updateNeiborPixel(image, y, x);
             }
         }
-
-        return;
     }
 };
 
