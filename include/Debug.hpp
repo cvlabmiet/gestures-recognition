@@ -15,6 +15,8 @@
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+
+extern size_t debug_frame_counter;
 #endif // ___DEBUG___
 
 // В режиме отладки: запись изображения в каталог отладки.
@@ -23,7 +25,7 @@ void imageWrite(const String& win_name, const cv::Mat& mat)
 {
 #if ___DEBUG___
     namespace fs = std::filesystem;
-    static size_t debug_frame_counter = 0;
+
     if (win_name == std::string("Input"))
         ++debug_frame_counter;
 
