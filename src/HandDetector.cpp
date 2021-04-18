@@ -5,7 +5,7 @@
 #include <opencv2/highgui.hpp>
 
 #include <HandDetector.hpp>
-#include <CorrectionOfExposition.h>
+#include <CorrectionOfExposition.hpp>
 
 using namespace cv;
 
